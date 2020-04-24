@@ -1,0 +1,19 @@
+{
+  "name": "rent-tracker-server",
+  "version": "1.0.0",
+  "description": "Backend for rent tracker",
+  "main": "index.js",
+  "repository": "https://github.com/jonathanthec/rent-tracker-server.git",
+  "author": "Jonathan Chen",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "graphql-yoga": "^1.18.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  },
+  "scripts": {
+    "start": "nodemon src/index.js"
+  }
+}
