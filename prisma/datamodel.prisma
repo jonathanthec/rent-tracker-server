@@ -1,11 +1,14 @@
 type User {
     id: ID! @id
     createdAt: DateTime! @createdAt
-    username: String!
+    updatedAt: DateTime! @updatedAt
+    username: String! @unique
     password: String!
+    email: String! @unique
     usertype: String!
-    email: String!
-    properties: [Property!]
+    firstname: String!
+    lastname: String!
+    properties: [Property]
 }
 
 type Property {
@@ -13,5 +16,7 @@ type Property {
     createdAt: DateTime! @createdAt
     updatedAt: DateTime! @updatedAt
     address: String!
-    owner: User
+    city: String!
+    state: String!
+    owner: User!
 }

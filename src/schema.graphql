@@ -1,22 +1,37 @@
 type Query {
-    info: String!
-    feed: [Property!]
+    getProperties: [Property!]!
 }
 
 type Mutation {
-    createProperty(address: String!): Property!
+    createUser(username: String!, password: String!, email: String!, usertype: String!, firstname: String!, lastname: String!): AuthPayload
+    login(username: String!, password: String!): AuthPayload
+}
+
+type AuthPayload {
+    token: String
+    user: User
 }
 
 type User {
     id: ID!
+    createdAt: DateTime!
+    updatedAt: DateTime!
     username: String!
-    usertype: String!
     email: String!
-    properties: [Property!]
+    usertype: String!
+    firstname: String!
+    lastname: String!
+    properties: [Property]
 }
 
 type Property {
     id: ID!
+    createdAt: DateTime!
+    updatedAt: DateTime!
     address: String!
-    owner: User
+    city: String!
+    state: String!
+    owner: User!
 }
+
+scalar DateTime

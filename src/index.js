@@ -1,19 +1,11 @@
-const { GraphQLServer } = require('graphql-yoga')
-const { prisma } = require('./generated/prisma-client')
+const { GraphQLServer } = require('graphql-yoga');
+const { prisma } = require('./generated/prisma-client');
+const Query = require('./resolvers/Query');
+const Mutation = require('./resolvers/Mutation');
 
 const resolvers = {
-    Query: {
-        feed: (root, args, context, info) => {
-            return context.prisma.properties();
-        },
-    },
-    Mutation: {
-        createProperty: (root, args, context) => {
-            return context.prisma.createProperty({
-                address: args.address,
-            })
-        },
-    },
+    Query,
+    Mutation
 }
 
 const server = new GraphQLServer({
