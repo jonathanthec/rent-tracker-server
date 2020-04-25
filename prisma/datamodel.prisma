@@ -5,4 +5,13 @@ type User {
     password: String!
     usertype: String!
     email: String!
+    properties: [Property!]
+}
+
+type Property {
+    id: ID! @id
+    createdAt: DateTime! @createdAt
+    updatedAt: DateTime! @updatedAt
+    address: String!
+    owner: User
 }

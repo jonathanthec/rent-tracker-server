@@ -1,0 +1,22 @@
+type Query {
+    info: String!
+    feed: [Property!]
+}
+
+type Mutation {
+    createProperty(address: String!): Property!
+}
+
+type User {
+    id: ID!
+    username: String!
+    usertype: String!
+    email: String!
+    properties: [Property!]
+}
+
+type Property {
+    id: ID!
+    address: String!
+    owner: User
+}
