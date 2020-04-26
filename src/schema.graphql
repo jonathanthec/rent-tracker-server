@@ -1,10 +1,15 @@
 type Query {
-    getProperties: [Property!]!
+    info: String!
+    getProperties: [Property]
+    getOneProperty(id: ID!): Property
 }
 
 type Mutation {
     createUser(username: String!, password: String!, email: String!, usertype: String!, firstname: String!, lastname: String!): AuthPayload
     login(username: String!, password: String!): AuthPayload
+    createProperty(address: String!, city: String!, state: String!, zip: String!): Property!
+    editProperty(id: ID!, address: String, city: String, state: String, zip: String): Property!
+    deleteProperty(id: ID!): Property!
 }
 
 type AuthPayload {
@@ -31,6 +36,7 @@ type Property {
     address: String!
     city: String!
     state: String!
+    zip: String!
     owner: User!
 }
 

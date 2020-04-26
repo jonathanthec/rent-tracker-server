@@ -18,5 +18,6 @@ type Property {
     address: String!
     city: String!
     state: String!
+    zip: String!
     owner: User!
 }
