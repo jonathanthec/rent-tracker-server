@@ -60,10 +60,40 @@ async function getOneContract(root, args, context) {
     return contract;
 }
 
+async function getPayments(root, args, context, info) {
+    const userId = getUserId(context);
+    if (!userId) {
+        throw new Error('You are not authorized to access these payment records!');
+    }
+    const payments = await context.prisma.payments(
+        {
+            where: {
+                contract: {
+                    id: args.id
+                }
+            }
+        }
+    );
+    return payments;
+}
+
+async function getOnePayment(root, args, context) {
+    const userId = getUserId(context);
+    if (!userId) {
+        throw new Error('You are not authorized to access this payment record!');
+    }
+    const payment = await context.prisma.payment({
+        id: args.id
+    })
+    return payment;
+}
+
 module.exports = {
     info,
     getProperties,
     getOneProperty,
     getContracts,
-    getOneContract
+    getOneContract,
+    getPayments,
+    getOnePayment
 }

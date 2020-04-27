@@ -38,6 +38,9 @@ async function login(root, args, context, info) {
 
 async function createProperty(root, args, context) {
     const userId = await getUserId(context);
+    if (!userId) {
+        throw new Error('Not authorized to create property!')
+    }
     return context.prisma.createProperty({
         address: args.address,
         city: args.city,
@@ -123,6 +126,46 @@ async function deleteContract(root, args, context) {
     })
 }
 
+async function createPayment(root, args, context) {
+    const userId = await getUserId(context);
+    if (!userId) {
+        throw new Error('Not authorized to create payment!')
+    }
+    return context.prisma.createPayment({
+        amount_due: args.amount_due,
+        amount_paid: args.amount_paid,
+        for_dates: args.for_dates,
+        contract: { connect: { id: args.id } }
+    })
+}
+
+async function editPayment(root, args, context) {
+    const userId = await getUserId(context);
+    if (!userId) {
+        throw new Error('Not authorized to edit payment record!');
+    }
+    return context.prisma.updatePayment({
+        where: {
+            id: args.id
+        },
+        data: {
+            amount_due: args.amount_due,
+            amount_paid: args.amount_paid,
+            for_dates: args.for_dates,
+        }
+    })
+}
+
+async function deletePayment(root, args, context) {
+    const userId = await getUserId(context);
+    if (!userId) {
+        throw new Error('Not authorized to delete this payment record!')
+    }
+    return context.prisma.deletePayment({
+        id: args.id
+    })
+}
+
 module.exports = {
     createUser,
     login,
@@ -131,5 +174,8 @@ module.exports = {
     deleteProperty,
     createContract,
     editContract,
-    deleteContract
+    deleteContract,
+    createPayment,
+    editPayment,
+    deletePayment
 }

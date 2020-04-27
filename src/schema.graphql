@@ -4,6 +4,8 @@ type Query {
     getOneProperty(id: ID!): Property
     getContracts(id: ID!): [Contract]
     getOneContract(id: ID!): Contract
+    getPayments(id: ID!): [Payment]
+    getOnePayment(id: ID!): Payment
 }
 
 type Mutation {
@@ -15,6 +17,9 @@ type Mutation {
     createContract(id: ID!, tenant_name: String!, tenant_email: String!, tenant_phone: String, starting_date: String!, ending_date: String, pay_frequency: String, pay_amount: String): Contract!
     editContract(id: ID!, tenant_name: String, tenant_email: String, tenant_phone: String, starting_date: String, ending_date: String, pay_frequency: String, pay_amount: String): Contract!
     deleteContract(id: ID!): Contract!
+    createPayment(id: ID!, amount_due: String!, amount_paid: String!, for_dates: String!): Payment!
+    editPayment(id: ID!, amount_due: String, amount_paid: String, for_dates: String): Payment!
+    deletePayment(id: ID!): Payment!
 }
 
 type AuthPayload {
