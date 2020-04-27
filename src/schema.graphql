@@ -2,6 +2,8 @@ type Query {
     info: String!
     getProperties: [Property]
     getOneProperty(id: ID!): Property
+    getContracts(id: ID!): [Contract]
+    getOneContract(id: ID!): Contract
 }
 
 type Mutation {
@@ -10,6 +12,9 @@ type Mutation {
     createProperty(address: String!, city: String!, state: String!, zip: String!): Property!
     editProperty(id: ID!, address: String, city: String, state: String, zip: String): Property!
     deleteProperty(id: ID!): Property!
+    createContract(id: ID!, tenant_name: String!, tenant_email: String!, tenant_phone: String, starting_date: String!, ending_date: String, pay_frequency: String, pay_amount: String): Contract!
+    editContract(id: ID!, tenant_name: String, tenant_email: String, tenant_phone: String, starting_date: String, ending_date: String, pay_frequency: String, pay_amount: String): Contract!
+    deleteContract(id: ID!): Contract!
 }
 
 type AuthPayload {
@@ -38,6 +43,32 @@ type Property {
     state: String!
     zip: String!
     owner: User!
+    contracts: [Contract]
+}
+
+type Contract {
+    id: ID!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    tenant_name: String!
+    tenant_phone: String!
+    tenant_email: String
+    starting_date: String!
+    ending_date: String
+    pay_frequency: String
+    pay_amount: String
+    property: Property!
+    payments: [Payment]
+}
+
+type Payment {
+    id: ID!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    amount_due: String!
+    amount_paid: String!
+    for_dates: String!
+    contract: Contract!
 }
 
 scalar DateTime

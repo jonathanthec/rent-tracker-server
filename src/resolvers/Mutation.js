@@ -75,10 +75,61 @@ async function deleteProperty(root, args, context) {
     })
 }
 
+async function createContract(root, args, context) {
+    const userId = await getUserId(context);
+    if (!userId) {
+        throw new Error('Not authorized to create property!');
+    }
+    return context.prisma.createContract({
+        tenant_name: args.tenant_name,
+        tenant_phone: args.tenant_phone,
+        tenant_email: args.tenant_email,
+        starting_date: args.starting_date,
+        ending_date: args.ending_date,
+        pay_frequency: args.pay_frequency,
+        pay_amount: args.pay_amount,
+        property: { connect: { id: args.id } }
+    })
+}
+
+async function editContract(root, args, context) {
+    const userId = await getUserId(context);
+    if (!userId) {
+        throw new Error('Not authorized to edit contract!');
+    }
+    return context.prisma.updateContract({
+        where: {
+            id: args.id
+        },
+        data: {
+            tenant_name: args.tenant_name,
+            tenant_phone: args.tenant_phone,
+            tenant_email: args.tenant_email,
+            starting_date: args.starting_date,
+            ending_date: args.ending_date,
+            pay_frequency: args.pay_frequency,
+            pay_amount: args.pay_amount,
+        }
+    })
+}
+
+async function deleteContract(root, args, context) {
+    const userId = await getUserId(context);
+    if (!userId) {
+        throw new Error('Not authorized to delete this contract!')
+    }
+    return context.prisma.deleteContract({
+        id: args.id
+    })
+}
+
 module.exports = {
     createUser,
     login,
     createProperty,
     editProperty,
-    deleteProperty
+    deleteProperty,
+    createContract,
+    editContract,
+    deleteContract
 }

@@ -32,8 +32,38 @@ async function getOneProperty(root, args, context) {
     return property;
 }
 
+async function getContracts(root, args, context, info) {
+    const userId = getUserId(context);
+    if (!userId) {
+        throw new Error('You are not authorized to access these contracts!');
+    }
+    const contracts = await context.prisma.contracts(
+        {
+            where: {
+                property: {
+                    id: args.id
+                }
+            }
+        }
+    );
+    return contracts;
+}
+
+async function getOneContract(root, args, context) {
+    const userId = getUserId(context);
+    if (!userId) {
+        throw new Error('You are not authorized to access this contract!');
+    }
+    const contract = await context.prisma.contract({
+        id: args.id
+    })
+    return contract;
+}
+
 module.exports = {
     info,
     getProperties,
-    getOneProperty
+    getOneProperty,
+    getContracts,
+    getOneContract
 }

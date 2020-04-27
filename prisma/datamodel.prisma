@@ -8,7 +8,7 @@ type User {
     usertype: String!
     firstname: String!
     lastname: String!
-    properties: [Property]
+    properties: [Property!] @relation(name: "UserOnProperty", onDelete: CASCADE)
 }
 
 type Property {
@@ -19,5 +19,31 @@ type Property {
     city: String!
     state: String!
     zip: String!
-    owner: User!
+    owner: User! @relation(name: "UserOnProperty", onDelete: SET_NULL)
+    contracts: [Contract!] @relation(name: "PropertyOnContract", onDelete: CASCADE)
+}
+
+type Contract {
+    id: ID! @id
+    createdAt: DateTime! @createdAt
+    updatedAt: DateTime! @updatedAt
+    tenant_name: String!
+    tenant_phone: String!
+    tenant_email: String
+    starting_date: String!
+    ending_date: String
+    pay_frequency: String
+    pay_amount: String
+    property: Property! @relation(name: "PropertyOnContract", onDelete: SET_NULL)
+    payments: [Payment!] @relation(name: "ContractOnPayment", onDelete: CASCADE)
+}
+
+type Payment {
+    id: ID! @id
+    createdAt: DateTime! @createdAt
+    updatedAt: DateTime! @updatedAt
+    amount_due: String!
+    amount_paid: String!
+    for_dates: String!
+    contract: Contract! @relation(name: "ContractOnPayment", onDelete: SET_NULL)
 }

@@ -5,12 +5,16 @@ const Query = require('./resolvers/Query');
 const Mutation = require('./resolvers/Mutation');
 const User = require('./resolvers/User');
 const Property = require('./resolvers/Property');
+const Contract = require('./resolvers/Contract');
+const Payment = require('./resolvers/Payment');
 
 const resolvers = {
     Query,
     Mutation,
     User,
-    Property
+    Property,
+    Contract,
+    Payment
 }
 
 const server = new GraphQLServer({
